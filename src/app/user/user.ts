@@ -3,4 +3,5 @@ export interface User {
   nome: string;
   cpf: string;
   idade: number;
+  value?: User;
 }

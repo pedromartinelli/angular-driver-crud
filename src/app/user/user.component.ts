@@ -38,8 +38,8 @@ export class UserComponent implements OnInit {
 
   deleteSelectedUsers() {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete the selected users?',
-      header: 'Confirm',
+      message: 'Você tem certeza que deseja excluir os usuários selecionados?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.users = this.users.filter(
@@ -48,8 +48,8 @@ export class UserComponent implements OnInit {
         this.selectedUsers = null;
         this.messageService.add({
           severity: 'success',
-          summary: 'Successful',
-          detail: 'Users Deleted',
+          summary: 'Sucesso',
+          detail: 'Usuários excluídos',
           life: 3000,
         });
       },
@@ -63,8 +63,9 @@ export class UserComponent implements OnInit {
 
   deleteUser(user: User) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + user.nome + '?',
-      header: 'Confirm',
+      message:
+        'Você tem certeza que deseja excluir o usuário ' + user.nome + '?',
+      header: 'Confirmar',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.userService.deleteUser(user.id).subscribe(() => {
@@ -72,8 +73,8 @@ export class UserComponent implements OnInit {
           this.user = {} as User;
           this.messageService.add({
             severity: 'success',
-            summary: 'Successful',
-            detail: 'User Deleted',
+            summary: 'Sucesso',
+            detail: 'Usuário Excluído',
             life: 3000,
           });
         });
@@ -95,8 +96,8 @@ export class UserComponent implements OnInit {
           this.users[this.findIndexById(this.user.id)] = this.user;
           this.messageService.add({
             severity: 'success',
-            summary: 'Successful',
-            detail: 'User Updated',
+            summary: 'Sucesso',
+            detail: 'Usuário Atualizado',
             life: 3000,
           });
         });
@@ -105,8 +106,8 @@ export class UserComponent implements OnInit {
           this.reloadUsers();
           this.messageService.add({
             severity: 'success',
-            summary: 'Successful',
-            detail: 'User Created',
+            summary: 'Sucesso',
+            detail: 'Usuário Cadastrado',
             life: 3000,
           });
         });
