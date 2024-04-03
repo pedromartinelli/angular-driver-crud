@@ -105,7 +105,13 @@
     </div>
     <div class="p-field mb-4">
       <label for="cpf">CPF</label>
-      <input type="text" id="cpf" [(ngModel)]="user.cpf" pInputText />
+      <input
+        type="text"
+        id="cpf"
+        [(ngModel)]="user.cpf"
+        mask="000.000.000-00"
+        pInputText
+      />
     </div>
     <div class="p-field">
       <label for="idade">Idade</label>

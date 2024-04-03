@@ -67,6 +67,15 @@ export class CarComponent implements OnInit {
 
   editCar(car: Car) {
     this.car = { ...car };
+
+    const selectedUser = this.drivers.find(
+      (user) => user.value.id === this.car.user!.id
+    );
+
+    if (selectedUser) {
+      this.car.user = selectedUser;
+    }
+
     this.carDialog = true;
   }
 
@@ -112,16 +121,27 @@ export class CarComponent implements OnInit {
           usuarioId: this.car.user!.value!.id,
         };
 
-        this.carService.updateCar(car).subscribe(() => {
-          this.reloadCars();
-          this.cars[this.findIndexById(this.car.id!)] = this.car;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Carro Atualizado',
-            life: 3000,
-          });
-        });
+        this.carService.updateCar(car).subscribe(
+          () => {
+            this.reloadCars();
+            this.cars[this.findIndexById(this.car.id!)] = this.car;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Carro Atualizado',
+              life: 3000,
+            });
+          },
+          (error) => {
+            console.error('Erro ao atualizar carro:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Falha',
+              detail: 'Falha ao atualizar carro. Por favor, tente novamente.',
+              life: 3000,
+            });
+          }
+        );
       } else {
         let car: Car = {
           marca: this.car.marca,
@@ -130,15 +150,27 @@ export class CarComponent implements OnInit {
           usuarioId: this.car.user!.value!.id,
         };
 
-        this.carService.createCar(car).subscribe(() => {
-          this.reloadCars();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Carro Cadastrado',
-            life: 3000,
-          });
-        });
+        this.carService.createCar(car).subscribe(
+          () => {
+            this.reloadCars();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Carro Cadastrado',
+              life: 3000,
+            });
+          },
+          (error) => {
+            console.error('Erro ao criar carro:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Falha',
+              detail:
+                'Falha ao cadastrar carro. Por favor, tente novamente mais tarde.',
+              life: 3000,
+            });
+          }
+        );
       }
 
       this.carDialog = false;

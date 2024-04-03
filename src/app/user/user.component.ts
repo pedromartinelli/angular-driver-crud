@@ -91,26 +91,48 @@ export class UserComponent implements OnInit {
     this.submitted = true;
     if (this.user.nome?.trim()) {
       if (this.user.id) {
-        this.userService.updateUser(this.user).subscribe(() => {
-          this.reloadUsers();
-          this.users[this.findIndexById(this.user.id)] = this.user;
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Usuário Atualizado',
-            life: 3000,
-          });
-        });
+        this.userService.updateUser(this.user).subscribe(
+          () => {
+            this.reloadUsers();
+            this.users[this.findIndexById(this.user.id)] = this.user;
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Usuário Atualizado',
+              life: 3000,
+            });
+          },
+          (error) => {
+            console.error('Erro ao atualizar usuário:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Falha',
+              detail: 'Falha ao atualizar usuário. Por favor, tente novamente.',
+              life: 3000,
+            });
+          }
+        );
       } else {
-        this.userService.createUser(this.user).subscribe(() => {
-          this.reloadUsers();
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: 'Usuário Cadastrado',
-            life: 3000,
-          });
-        });
+        this.userService.createUser(this.user).subscribe(
+          () => {
+            this.reloadUsers();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Sucesso',
+              detail: 'Usuário Cadastrado',
+              life: 3000,
+            });
+          },
+          (error) => {
+            console.error('Erro ao cadastrar usuário:', error);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Falha',
+              detail: 'Falha ao cadastrar usuário. Por favor, tente novamente.',
+              life: 3000,
+            });
+          }
+        );
       }
 
       this.userDialog = false;

@@ -14,6 +14,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 import { UserComponent } from './user.component';
 
@@ -35,7 +36,9 @@ import { UserComponent } from './user.component';
     ConfirmDialogModule,
     DialogModule,
     FormsModule,
+    NgxMaskDirective,
   ],
+  providers: [provideNgxMask()],
   exports: [UserComponent],
 })
 export class UserModule {}
